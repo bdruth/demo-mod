@@ -92,3 +92,4 @@ saves
 stats
 crash-reports
 options.txt
+*.lck
