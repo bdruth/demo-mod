@@ -1,0 +1,16 @@
+[
+{
+  "modid": "example",
+  "name": "Example Mod",
+  "description": "The Skeleton for ANY mod :D",
+  "credits": "By captain_shadows",
+  "logoFile": "/assets/example/textures/logo/logo.png",
+  "version": "${version}",
+  "url": "https://github.com/CaptainShadows/BaseMod",
+  "updateUrl": "https://github.com/CaptainShadows/BaseMod",
+  "authors": [ "captain_shadows" ],
+  "dependencies": [
+     "required-after:Forge@[7.7.1.650,)"
+  ]
+}
+]

@@ -1,0 +1,58 @@
+// Captain Shadows' Example Mod
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies { classpath 'com.github.abrarsyed.gmcp:GMCP:0.8.+' }
+}
+
+apply plugin: "gmcp"
+
+// Replace the group string with whatever "group", this is a unique ID per mod
+group = 'com.github.bdruth.demo-mod'
+// Replace the version string with whatever version you want
+version = "1.0.0.${System.env.BUILD_NUMBER}.ALPHA"
+// This is the name of the Mod, that will be included in the .jar file
+archivesBaseName = 'Demo-Mod'
+
+sourceSets {
+    main {
+		// here is where you specify where the source is for all the Java src files
+        java { srcDir 'common' }
+		// here is where you keep the resources
+        resources { srcDir 'resources' }
+    }
+}
+
+minecraft {
+	// here you specify different things like an access transformer, or the Minecraft version
+    minecraftVersion = '1.6.4'
+}
+
+processResources {
+    // Iterate through files to expand version on things not PNGs
+    eachFile { file ->
+        if (!(file.getPath().endsWith('png'))){
+            expand version: version, mcversion: minecraft.minecraftVersion
+        }
+    }
+}
+
+// This is the standard obfuscated jar is created
+jar {
+	// this goes before the version but after the name
+    appendix = 'universal'
+	// Creates a manifest file with the specified string in this format => 'String' : 'Key'
+    manifest {
+        attributes 'MCVersion' : project.minecraft.minecraftVersion
+        attributes 'Version' : project.version
+    }
+}
+
+// This task allows a .jar file to be made with the source of your mod
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    appendix = 'src'
+}
+
+artifacts {  archives sourceJar  }
